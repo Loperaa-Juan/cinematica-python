@@ -1,15 +1,18 @@
+# IMPORTAMOS LAS LIBRERIAS NECESARIAS
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 from matplotlib.animation import FuncAnimation
 from matplotlib.widgets import Button
 
+#INICIALIZAMOS LAS VARIABLES A UTILIZAR
 theta=np.pi/4
 x0=0.
 y0=0.
 v0=50.
 g=9.8
 
+#CREAMOS LAS FUNCIONES PARA CREAR DATOS 
 def x_pos(theta,t,v0,x0):
     x=x0+v0*np.cos(theta)*t
     return x
@@ -29,6 +32,22 @@ def velocidad(vx, vy):
 
     return velocidad_punto
 
+def pausar_animacion(event):
+    global animacion_pausada
+    animacion_pausada = not animacion_pausada
+    if animacion_pausada:
+        anim.event_source.stop()
+        boton_pausa.label.set_text('Reanudar')
+    else:
+        anim.event_source.start()
+        boton_pausa.label.set_text('Pausar')
+
+def actualizar(i):
+    ln.set_data(x[i],y[i])
+    position_text.set_text(f"Tiempo: {t[i]:.2f} s\nPosición (x, y): {x[i]:.2f}, {y[i]:.2f} s\nVelocidad: {vmagnitude[i]:.2f} m/s")
+    position_text.xy = (x[i], y[i])
+    return ln, position_text
+
 t=np.linspace(0,8,50)
 x=x_pos(theta,t,v0,0)
 y=y_pos(theta,t,v0,0)
@@ -46,26 +65,8 @@ ax.set_ylim(0,100)
 position_text = ax.annotate("", xy=(0, 0), xytext=(20, 20), textcoords="offset points",
                             bbox=dict(boxstyle="round", fc="w"))
 
+#INICIALIZAMOS LA PAUSA DE LA ANIMACIÓN
 animacion_pausada = False
-
-
-def pausar_animacion(event):
-    global animacion_pausada
-    animacion_pausada = not animacion_pausada
-    if animacion_pausada:
-        anim.event_source.stop()
-        boton_pausa.label.set_text('Reanudar')
-    else:
-        anim.event_source.start()
-        boton_pausa.label.set_text('Pausar')
-
-def actualizar(i):
-    ln.set_data(x[i],y[i])
-    position_text.set_text(f"Tiempo: {t[i]:.2f} s\nPosición (x, y): {x[i]:.2f}, {y[i]:.2f} s\nVelocidad: {vmagnitude[i]:.2f} m/s")
-    position_text.xy = (x[i], y[i])
-    return ln, position_text
-
-
 
 anim = animation.FuncAnimation(fig,actualizar,range(N),interval=0.00001)
 
@@ -77,5 +78,5 @@ ax_boton = plt.axes([0.81, 0.025, 0.1, 0.04])
 boton_pausa = Button(ax_boton, 'Pausar')
 boton_pausa.on_clicked(pausar_animacion)
 
-print(theta)
+#POR ÚLTIMO, MOSTRAMOS EN INTERFAZ GRÁFICA
 plt.show()
