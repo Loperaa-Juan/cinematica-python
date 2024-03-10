@@ -17,10 +17,25 @@ def x_pos(theta,t,v0,x0):
 def y_pos(theta,t,v0,y0):
     y=y0+(v0*np.sin(theta)*t)-((g*t**2)/2)
     return y
+
+def velocidad_x(theta, t, v0):
+    return v0 * np.cos(theta)
+
+def velocidad_y(theta, t, v0):
+    return v0 * np.sin(theta) - g * t
+
+def velocidad(vx, vy):
+    velocidad_punto = np.sqrt(vx**2 + vy**2)
+
+    return velocidad_punto
+
 t=np.linspace(0,8,50)
 x=x_pos(theta,t,v0,0)
 y=y_pos(theta,t,v0,0)
 N=len(t)
+vx = velocidad_x(theta, t, v0)
+vy = velocidad_y(theta, t, v0)
+vmagnitude = velocidad(vx, vy)
 
 fig, ax=plt.subplots()
 ln, = plt.plot(x,y,'ro')
@@ -32,6 +47,7 @@ position_text = ax.annotate("", xy=(0, 0), xytext=(20, 20), textcoords="offset p
                             bbox=dict(boxstyle="round", fc="w"))
 
 animacion_pausada = False
+
 
 def pausar_animacion(event):
     global animacion_pausada
@@ -45,9 +61,10 @@ def pausar_animacion(event):
 
 def actualizar(i):
     ln.set_data(x[i],y[i])
-    position_text.set_text(f"Tiempo: {t[i]:.2f} s\nPosición (x, y): {x[i]:.2f}, {y[i]:.2f}")
+    position_text.set_text(f"Tiempo: {t[i]:.2f} s\nPosición (x, y): {x[i]:.2f}, {y[i]:.2f} s\nVelocidad: {vmagnitude[i]:.2f} m/s")
     position_text.xy = (x[i], y[i])
     return ln, position_text
+
 
 
 anim = animation.FuncAnimation(fig,actualizar,range(N),interval=0.00001)
