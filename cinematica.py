@@ -14,7 +14,7 @@ g=9.8
 
 #CREAMOS LAS FUNCIONES PARA CREAR DATOS 
 
-#FUNCIONES DE POSICIÓN
+#FUNCIONES PARA DETERMINAR LA POSICIÓN EN CADA EJE
 def x_pos(theta,t,v0,x0):
     x=x0+v0*np.cos(theta)*t
     return x
@@ -23,7 +23,7 @@ def y_pos(theta,t,v0,y0):
     y=y0+(v0*np.sin(theta)*t)-((g*t**2)/2)
     return y
 
-#FUNCIONES DE VELOCIDAD
+#FUNCIONES PARA DETERMINAR LA VELOCIDAD EN CADA EJE Y LA MAGNITUD DE LA VELOCIDAD
 def velocidad_x(theta, t, v0):
     return v0 * np.cos(theta)
 
@@ -31,9 +31,9 @@ def velocidad_y(theta, t, v0):
     return v0 * np.sin(theta) - g * t
 
 def velocidad(vx, vy):
-    velocidad_punto = np.sqrt(vx**2 + vy**2)
+    magnitud_velocidad = np.sqrt(vx**2 + vy**2)
 
-    return velocidad_punto
+    return magnitud_velocidad
 
 #FUNCIÓN PARA PAUSAR LA GRAFICA
 def pausar_animacion(event):
