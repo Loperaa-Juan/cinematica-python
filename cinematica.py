@@ -13,6 +13,8 @@ v0=50.
 g=9.8
 
 #CREAMOS LAS FUNCIONES PARA CREAR DATOS 
+
+#FUNCIONES DE POSICIÓN
 def x_pos(theta,t,v0,x0):
     x=x0+v0*np.cos(theta)*t
     return x
@@ -21,6 +23,7 @@ def y_pos(theta,t,v0,y0):
     y=y0+(v0*np.sin(theta)*t)-((g*t**2)/2)
     return y
 
+#FUNCIONES DE VELOCIDAD
 def velocidad_x(theta, t, v0):
     return v0 * np.cos(theta)
 
@@ -32,6 +35,7 @@ def velocidad(vx, vy):
 
     return velocidad_punto
 
+#FUNCIÓN PARA PAUSAR LA GRAFICA
 def pausar_animacion(event):
     global animacion_pausada
     animacion_pausada = not animacion_pausada
@@ -42,6 +46,7 @@ def pausar_animacion(event):
         anim.event_source.start()
         boton_pausa.label.set_text('Pausar')
 
+#FUNCIÓN PARA ACTUALIZAR EN TIEMPO REAL
 def actualizar(i):
     ln.set_data(x[i],y[i])
     position_text.set_text(f"Tiempo: {t[i]:.2f} s\nPosición (x, y): {x[i]:.2f}, {y[i]:.2f} s\nVelocidad: {vmagnitude[i]:.2f} m/s")
