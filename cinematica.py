@@ -8,8 +8,8 @@ from matplotlib.widgets import Button
 #INICIALIZAMOS LAS VARIABLES A UTILIZAR
 theta=0
 x0=0.
-y0=50.
-v0=330.
+y0=0.
+v0=50.
 g=9.8
 
 #CREAMOS LAS FUNCIONES PARA CREAR DATOS 
@@ -32,10 +32,10 @@ def velocidad(vx, vy):
 
     return velocidad_punto
 
-def magnitud( x0,y0,x,y ):
-    magnitud = np.sqrt((x**2 - x0**2)+(y**2 - y0**2))
+def distanciaAB( x0,y0,x,y ):
+    distanciaAB = np.sqrt((x**2 - x0**2)+(y**2 - y0**2))
 
-    return magnitud
+    return distanciaAB
 
 def pausar_animacion(event):
     global animacion_pausada
@@ -56,12 +56,12 @@ def actualizar(i):
 t=np.linspace(0,8,50)
 x=x_pos(theta,t,v0,0)
 y=y_pos(theta,t,v0,0)
-a=magnitud(x0,y0,x,y)
+a=distanciaAB(x0,y0,x,y)
 N=len(t)
 vx = velocidad_x(theta, t, v0)
 vy = velocidad_y(theta, t, v0)
 vmagnitude = velocidad(vx, vy)
-distancia = magnitud(x0,y0,x,y)
+distancia = distanciaAB(x0,y0,x,y)
 
 fig, ax=plt.subplots()
 ln, = plt.plot(x,y,'ro')
