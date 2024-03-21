@@ -6,7 +6,7 @@ from matplotlib.animation import FuncAnimation
 from matplotlib.widgets import Button
 
 #INICIALIZAMOS LAS VARIABLES A UTILIZAR
-theta=np.pi/8
+theta=0
 x0=0.
 y0=0.
 v0=50.
@@ -53,7 +53,7 @@ def actualizar(i):
     position_text.xy = (x[i], y[i])
     return ln, position_text
 
-t=np.linspace(0,5,50)
+t=np.linspace(0,8,50)
 x=x_pos(theta,t,v0,0)
 y=y_pos(theta,t,v0,0)
 d=distanciaAB(x0,y0,x,y)
