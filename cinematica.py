@@ -9,7 +9,7 @@ from matplotlib.widgets import Button
 theta=np.pi/8
 x0=0.
 y0=0.
-v0=80.
+v0=50.
 g=9.8
 
 #CREAMOS LAS FUNCIONES PARA CREAR DATOS 
@@ -53,7 +53,7 @@ def actualizar(i):
     position_text.xy = (x[i], y[i])
     return ln, position_text
 
-t=np.linspace(0,8,80)
+t=np.linspace(0,5,50)
 x=x_pos(theta,t,v0,0)
 y=y_pos(theta,t,v0,0)
 d=distanciaAB(x0,y0,x,y)
@@ -65,7 +65,7 @@ distancia = distanciaAB(x0,y0,x,y)
 
 fig, ax=plt.subplots()
 ln, = plt.plot(x,y,'ro')
-ax.set_xlim(0,280)
+ax.set_xlim(0,80)
 ax.set_ylim(0,100)
 
 #AÑADEMOS LA FORMA DE IMPRIMIR EN PANTALLA LOS RESULTADOS
