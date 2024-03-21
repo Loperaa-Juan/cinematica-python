@@ -6,15 +6,13 @@ from matplotlib.animation import FuncAnimation
 from matplotlib.widgets import Button
 
 #INICIALIZAMOS LAS VARIABLES A UTILIZAR
-theta=np.pi/4
+theta=np.pi/8
 x0=0.
 y0=0.
-v0=50.
+v0=80.
 g=9.8
 
 #CREAMOS LAS FUNCIONES PARA CREAR DATOS 
-
-#FUNCIONES PARA DETERMINAR LA POSICIÓN EN CADA EJE
 def x_pos(theta,t,v0,x0):
     x=x0+v0*np.cos(theta)*t
     return x
@@ -23,7 +21,6 @@ def y_pos(theta,t,v0,y0):
     y=y0+(v0*np.sin(theta)*t)-((g*t**2)/2)
     return y
 
-#FUNCIONES PARA DETERMINAR LA VELOCIDAD EN CADA EJE Y LA MAGNITUD DE LA VELOCIDAD
 def velocidad_x(theta, t, v0):
     return v0 * np.cos(theta)
 
@@ -31,11 +28,15 @@ def velocidad_y(theta, t, v0):
     return v0 * np.sin(theta) - g * t
 
 def velocidad(vx, vy):
-    magnitud_velocidad = np.sqrt(vx**2 + vy**2)
+    velocidad_punto = np.sqrt(vx**2 + vy**2)
 
-    return magnitud_velocidad
+    return velocidad_punto
 
-#FUNCIÓN PARA PAUSAR LA GRAFICA
+def magnitud( x0,y0,x,y ):
+    alcance_maximo = np.sqrt((x**2 - x0**2)+(y**2 - y0**2))
+
+    return alcance_maximo
+
 def pausar_animacion(event):
     global animacion_pausada
     animacion_pausada = not animacion_pausada
@@ -46,20 +47,21 @@ def pausar_animacion(event):
         anim.event_source.start()
         boton_pausa.label.set_text('Pausar')
 
-#FUNCIÓN PARA ACTUALIZAR EN TIEMPO REAL
 def actualizar(i):
     ln.set_data(x[i],y[i])
-    position_text.set_text(f"Tiempo: {t[i]:.2f} s\nPosición (x, y): {x[i]:.2f}, {y[i]:.2f} s\nVelocidad: {vmagnitude[i]:.2f} m/s")
+    position_text.set_text(f"Tiempo: {t[i]:.2f} s\nPosición (x, y): {x[i]:.2f}, {y[i]:.2f} m\nVelocidad: {vmagnitude[i]:.2f} m/s \n distancia: {alcanceMax[i]:.2f} m")
     position_text.xy = (x[i], y[i])
     return ln, position_text
 
-t=np.linspace(0,8,50)
+t=np.linspace(0,8,80)
 x=x_pos(theta,t,v0,0)
 y=y_pos(theta,t,v0,0)
+a=magnitud(x0,y0,x,y)
 N=len(t)
 vx = velocidad_x(theta, t, v0)
 vy = velocidad_y(theta, t, v0)
 vmagnitude = velocidad(vx, vy)
+alcanceMax = magnitud(x0,y0,x,y)
 
 fig, ax=plt.subplots()
 ln, = plt.plot(x,y,'ro')
