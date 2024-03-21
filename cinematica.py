@@ -56,7 +56,7 @@ def actualizar(i):
 t=np.linspace(0,8,50)
 x=x_pos(theta,t,v0,0)
 y=y_pos(theta,t,v0,0)
-a=distanciaAB(x0,y0,x,y)
+d=distanciaAB(x0,y0,x,y)
 N=len(t)
 vx = velocidad_x(theta, t, v0)
 vy = velocidad_y(theta, t, v0)
@@ -65,7 +65,7 @@ distancia = distanciaAB(x0,y0,x,y)
 
 fig, ax=plt.subplots()
 ln, = plt.plot(x,y,'ro')
-ax.set_xlim(0,280)
+ax.set_xlim(0,80)
 ax.set_ylim(0,100)
 
 #AÑADEMOS LA FORMA DE IMPRIMIR EN PANTALLA LOS RESULTADOS
