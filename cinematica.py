@@ -6,10 +6,10 @@ from matplotlib.animation import FuncAnimation
 from matplotlib.widgets import Button
 
 #INICIALIZAMOS LAS VARIABLES A UTILIZAR
-theta=np.pi/4
+theta=np.pi/8
 x0=0.
 y0=0.
-v0=50.
+v0=80.
 g=9.8
 
 #CREAMOS LAS FUNCIONES PARA CREAR DATOS 
@@ -32,6 +32,11 @@ def velocidad(vx, vy):
 
     return velocidad_punto
 
+def magnitud( x0,y0,x,y ):
+    alcance_maximo = np.sqrt(((x0**2)*(y0**2))+(x*y))
+
+    return alcance_maximo
+
 def pausar_animacion(event):
     global animacion_pausada
     animacion_pausada = not animacion_pausada
@@ -44,17 +49,19 @@ def pausar_animacion(event):
 
 def actualizar(i):
     ln.set_data(x[i],y[i])
-    position_text.set_text(f"Tiempo: {t[i]:.2f} s\nPosición (x, y): {x[i]:.2f}, {y[i]:.2f} s\nVelocidad: {vmagnitude[i]:.2f} m/s")
+    position_text.set_text(f"Tiempo: {t[i]:.2f} s\nPosición (x, y): {x[i]:.2f}, {y[i]:.2f} m\nVelocidad: {vmagnitude[i]:.2f} m/s \n distancia: {alcanceMax[i]:.2f} m")
     position_text.xy = (x[i], y[i])
     return ln, position_text
 
-t=np.linspace(0,8,50)
+t=np.linspace(0,8,80)
 x=x_pos(theta,t,v0,0)
 y=y_pos(theta,t,v0,0)
+a=magnitud(x0,y0,x,y)
 N=len(t)
 vx = velocidad_x(theta, t, v0)
 vy = velocidad_y(theta, t, v0)
 vmagnitude = velocidad(vx, vy)
+alcanceMax = magnitud(x0,y0,x,y)
 
 fig, ax=plt.subplots()
 ln, = plt.plot(x,y,'ro')
